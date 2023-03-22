@@ -1,18 +1,26 @@
+'''
+Linux commands:
+
+g++ log_parser.cpp -o log_parser
+/log_parser output.dat
+'''
+
 import seaborn as sb
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
 def dataImport(textfile):
-    df = pd.read_csv(textfile, sep=" ", header=None)
-    #df = df.iloc[1:]
+    df = pd.read_csv(textfile, sep=",", skiprows=1, skipfooter=1, header=None, names=list(range(8)))
     return df
-    
-    
+
 def main():
-    #fileName = input('Enter filename: ')
-    fileName = 'packet1.txt'
+    fileName = 'packet2.txt'
     data = dataImport(fileName)
-    print(data)
+    tempData = data[data[0] == 3].drop([5, 6, 7], axis=1)
+
+    
+    graph = sb.relplot(data=tempData, kind="line",x=1, y=3)
+    graph.set(title = "GRAPH", xlabel='time',ylabel='temp')
 
 main()
