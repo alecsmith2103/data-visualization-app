@@ -64,17 +64,27 @@ def main():
     # Graph stuff
     fig, axs = plt.subplots(ncols=2, nrows=2, figsize=(12,8))
 
-    ACC_graph = sb.lineplot(x=1,y='val',hue='Sensor_number', data=ACC_Data_M, ax=axs[0,0])
-    IMU_graph = sb.lineplot(x=1,y='val',hue='Sensor_number', data=IMU_Data_M, ax=axs[1,0])
-    TC_graph = sb.lineplot(x=1,y='val',hue='Sensor_number', data=TC_Data_M, ax=axs[0,1])
-    PRES_graph = sb.lineplot(x=1,y='val',hue='Sensor_number', data=PRES_Data_M, ax=axs[1,1])
-
+    #ACC Graph settings
+    ACC_graph = sb.lineplot(x=1,y='val',hue='Sensor_number', data=ACC_Data_M, ax=axs[0,0], marker='d')
     ACC_graph.set(title = "Acceleration Data", xlabel='time',ylabel='acceleration')
+    ACC_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0)
+
+    #IMU Graph settings
+    IMU_graph = sb.lineplot(x=1,y='val',hue='Sensor_number', data=IMU_Data_M, ax=axs[1,0], marker='d')
     IMU_graph.set(title = "IMU Data", xlabel='time',ylabel='IMU')
+    IMU_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0)
+
+    #TC Graph settings
+    TC_graph = sb.lineplot(x=1,y='val',hue='Sensor_number', data=TC_Data_M, ax=axs[0,1], marker='d')
     TC_graph.set(title = "TC Data", xlabel='time',ylabel='TC')
+    TC_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0)
+
+    #PRES Graph settings
+    PRES_graph = sb.lineplot(x=1,y='val',hue='Sensor_number', data=PRES_Data_M, ax=axs[1,1], marker='d')
     PRES_graph.set(title = "PRES Data", xlabel='time',ylabel='PRES')
+    PRES_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0)
     
-    plt.subplots_adjust(hspace=0.3, wspace=0.3)
+    plt.subplots_adjust(hspace=0.3, wspace=0.42)
     plt.show()
     
 main()
