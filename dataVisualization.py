@@ -62,7 +62,7 @@ def main():
     PRES_Data_M = PRES_Data.melt(1, var_name='Sensor_number', value_name='val')
 
     # Graph stuff
-    fig, axs = plt.subplots(ncols=2, nrows=2)
+    fig, axs = plt.subplots(ncols=2, nrows=2, figsize=(12,8))
 
     ACC_graph = sb.lineplot(x=1,y='val',hue='Sensor_number', data=ACC_Data_M, ax=axs[0,0])
     IMU_graph = sb.lineplot(x=1,y='val',hue='Sensor_number', data=IMU_Data_M, ax=axs[1,0])
@@ -74,6 +74,7 @@ def main():
     TC_graph.set(title = "TC Data", xlabel='time',ylabel='TC')
     PRES_graph.set(title = "PRES Data", xlabel='time',ylabel='PRES')
     
+    plt.subplots_adjust(hspace=0.3, wspace=0.3)
     plt.show()
     
 main()
