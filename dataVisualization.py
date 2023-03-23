@@ -93,6 +93,6 @@ def main():
     PRES_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0)
     
     plt.subplots_adjust(hspace=0.3, wspace=0.42)
-    plt.show(title='hey')
+    plt.show()
     
 main()
