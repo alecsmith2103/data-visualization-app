@@ -1,9 +1,10 @@
 '''
 Linux Commands:
 
-g++ log_parser.cpp -o log_parser
+g++ decode.cpp -o decode
+./decode output.dat
 
-./log_parser output.dat
+
 '''
 
 # Import Pandas Library to create a data frame and seaborn library for visualization tools
@@ -14,14 +15,13 @@ from pathlib import Path
 
 # Reads a text file, returns a data frame without header and footer
 def dataImport(textfile):
-    df = pd.read_csv(textfile, sep=",", skipfooter=1, header=None, names=list(range(8)), engine="python")
+    df = pd.read_csv(textfile, sep=",", header=None, names=list(range(8)), engine="python")
     return df
 
 def main():
     
     #define text file
-    directory = input('Enter name of directory containing the packets: ')
-    files = Path(directory).glob('*')
+    files = Path("decodedpackets").glob('*')
 
     #GPS_Data = pd.DataFrame() # unused for now
     #RMC_Data = pd.DataFrame() # unused for now
