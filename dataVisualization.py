@@ -19,25 +19,30 @@ def dataImport(textfile):
     return df
 
 def main():
-    
     #define text file
+    if (not Path("decodedpackets").exists()):
+        print("Folder \"decodedpackets\" not found.")
+        return
+        
     files = Path("decodedpackets").glob('*')
 
-    #GPS_Data = pd.DataFrame() # unused for now
-    #RMC_Data = pd.DataFrame() # unused for now
+    GPS_Data = pd.DataFrame() # unused for now
+    RMC_Data = pd.DataFrame() # unused for now
     ACC_Data = pd.DataFrame()
     IMU_Data = pd.DataFrame()
     TC_Data = pd.DataFrame()
     PRES_Data = pd.DataFrame()
-    #Spectrometer_Data = pd.DataFrame() # unused for now
+    Spectrometer_Data = pd.DataFrame() # unused for now
     
+    # import the data from each file in directory
     for file in files:
-        # import the data from each file in directory
         data = dataImport(file)
 
-        #GPS_Data = data[data[0] == 1].drop([7], axis=1) # unused for now
+        #new_GPS_Data = data[data[0] == 1].drop([0], axis=1) # unused for now
+        #GPS_Data = pd.concat([GPS_Data, new_GPS_Data]) # unused for now
 
-        #RMC_Data = data[data[0] == 2].drop([7], axis=1) # unused for now
+        #new_RMC_Data = data[data[0] == 2].drop([0], axis=1) # unused for now
+        #RMC_Data = pd.concat([RMC_Data, RMC_GPS_Data]) # unused for now
 
         new_ACC_Data = data[data[0] == 3].drop([0, 5, 6, 7], axis=1)
         ACC_Data = pd.concat([ACC_Data, new_ACC_Data])
@@ -47,51 +52,81 @@ def main():
         
         new_TC_Data = data[data[0] == 5].drop([0], axis=1)
         TC_Data = pd.concat([TC_Data, new_TC_Data])
-        TC_Data_M = TC_Data.melt(1, var_name='Sensor_number', value_name='val')
 
         new_PRES_Data = data[data[0] == 6].drop([0, 7], axis=1)
         PRES_Data = pd.concat([PRES_Data, new_PRES_Data])
-        PRES_Data_M = PRES_Data.melt(1, var_name='Sensor_number', value_name='val')
 
-        #Spectrometer_Data = data[data[0] == 7].drop([7], axis=1) #unused for now
+        #new_Spectrometer_Data = data[data[0] == 7].drop([0], axis=1) # unused for now
+        #Spectrometer_Data = pd.concat([Spectrometer_Data, new_Spectrometer_Data]) # unused for now
     
     # Melt/Format data correctly for graphs
+    #GPS_Data_M = GPS_Data.melt(1, var_name='Sensor_number', value_name='val') # unused for now
+    #RMC_Data_M = RMC_Data.melt(1, var_name='Sensor_number', value_name='val') # unused for now
     ACC_Data_M = ACC_Data.melt(1, var_name='Sensor_number', value_name='val')
     IMU_Data_M = IMU_Data.melt(1, var_name='Sensor_number', value_name='val')
     TC_Data_M = TC_Data.melt(1, var_name='Sensor_number', value_name='val')
     PRES_Data_M = PRES_Data.melt(1, var_name='Sensor_number', value_name='val')
+    #Spectrometer_Data_M = Spectrometer_Data.melt(1, var_name='Sensor_number', value_name='val') # unused for now
 
-    # Graph stuff
+    # Graph setup
     fig, axs = plt.subplots(ncols=2, nrows=2, figsize=(12,7), facecolor='#adadad')
 
-    #ACC Graph settings
+    #GPS Graph settings # unused for now and needs additional changing
+    '''
+    GPS_graph = sb.lineplot(x=1,y='val',hue='Sensor_number', data=GPS_Data_M, 
+        ax=axs[], marker='d')
+    GPS_graph.set(title = "GPS Data", xlabel='time',ylabel='',
+        facecolor="#e0e0e0")
+    GPS_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0)
+    '''
+
+    #RMC Graph settings # unused for now and needs additional changing
+    '''
+    RMC_graph = sb.lineplot(x=1,y='val',hue='Sensor_number', data=RMC_Data_M, 
+        ax=axs[], marker='d')
+    RMC_graph.set(title = "RMC Data", xlabel='time',ylabel='',
+        facecolor="#e0e0e0")
+    RMC_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0)
+    '''
+
+    # ACC Graph settings
     ACC_graph = sb.lineplot(x=1,y='val',hue='Sensor_number', data=ACC_Data_M, 
         ax=axs[0,0], marker='d')
     ACC_graph.set(title = "Acceleration Data", xlabel='time',ylabel='acceleration',
-    facecolor="#e0e0e0")
+        facecolor="#e0e0e0")
     ACC_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0)
 
-    #IMU Graph settings
+    # IMU Graph settings
     IMU_graph = sb.lineplot(x=1,y='val',hue='Sensor_number', data=IMU_Data_M, 
         ax=axs[1,0], marker='d')
     IMU_graph.set(title = "IMU Data", xlabel='time',ylabel='IMU',
         facecolor="#e0e0e0")
     IMU_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0)
 
-    #TC Graph settings
+    # TC Graph settings
     TC_graph = sb.lineplot(x=1,y='val',hue='Sensor_number', data=TC_Data_M, 
         ax=axs[0,1], marker='d')
     TC_graph.set(title = "TC Data", xlabel='time',ylabel='TC',
         facecolor="#e0e0e0")
     TC_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0)
 
-    #PRES Graph settings
+    # PRES Graph settings
     PRES_graph = sb.lineplot(x=1,y='val',hue='Sensor_number', data=PRES_Data_M, 
         ax=axs[1,1], marker='d')
     PRES_graph.set(title = "PRES Data", xlabel='time',ylabel='PRES',
         facecolor="#e0e0e0")
     PRES_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0)
-    
+
+    #Spectrometer Graph settings # unused for now and needs additional changing
+    '''
+    Spectrometer_graph = sb.lineplot(x=1,y='val',hue='Sensor_number', data=Spectrometer_Data_M, 
+        ax=axs[], marker='d')
+    Spectrometer_graph.set(title = "Spectrometer Data", xlabel='time',ylabel='',
+        facecolor="#e0e0e0")
+    Spectrometer_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0)
+    '''
+
+    # Show plots
     plt.subplots_adjust(hspace=0.3, wspace=0.42)
     plt.show()
     
