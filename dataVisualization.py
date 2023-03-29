@@ -14,7 +14,7 @@ from pathlib import Path
 
 # Reads a text file, returns a data frame without header and footer
 def dataImport(textfile):
-    df = pd.read_csv(textfile, sep=",", skiprows=1, skipfooter=1, header=None, names=list(range(8)), engine="python")
+    df = pd.read_csv(textfile, sep=",", skipfooter=1, header=None, names=list(range(8)), engine="python")
     return df
 
 def main():
