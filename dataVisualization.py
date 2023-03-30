@@ -23,8 +23,6 @@ def main():
     if (not Path("decodedpackets").exists()):
         print("Folder \"decodedpackets\" not found.")
         return
-        
-    files = Path("decodedpackets").glob('*')
 
     GPS_Data = pd.DataFrame() # unused for now
     RMC_Data = pd.DataFrame() # unused for now
@@ -33,32 +31,56 @@ def main():
     TC_Data = pd.DataFrame()
     PRES_Data = pd.DataFrame()
     Spectrometer_Data = pd.DataFrame() # unused for now
-    
-    # import the data from each file in directory
+
+    # Take input for number of packets to be graphed
+    fileCount = 0
+    files = Path("decodedpackets").glob('*')
     for file in files:
-        data = dataImport(file)
-
-        #new_GPS_Data = data[data[0] == 1].drop([0], axis=1) # unused for now
-        #GPS_Data = pd.concat([GPS_Data, new_GPS_Data]) # unused for now
-
-        #new_RMC_Data = data[data[0] == 2].drop([0], axis=1) # unused for now
-        #RMC_Data = pd.concat([RMC_Data, RMC_GPS_Data]) # unused for now
-
-        new_ACC_Data = data[data[0] == 3].drop([0, 5, 6, 7], axis=1)
-        ACC_Data = pd.concat([ACC_Data, new_ACC_Data])
-
-        new_IMU_Data = data[data[0] == 4].drop([0], axis=1)
-        IMU_Data = pd.concat([IMU_Data, new_IMU_Data])
-        
-        new_TC_Data = data[data[0] == 5].drop([0], axis=1)
-        TC_Data = pd.concat([TC_Data, new_TC_Data])
-
-        new_PRES_Data = data[data[0] == 6].drop([0, 7], axis=1)
-        PRES_Data = pd.concat([PRES_Data, new_PRES_Data])
-
-        #new_Spectrometer_Data = data[data[0] == 7].drop([0], axis=1) # unused for now
-        #Spectrometer_Data = pd.concat([Spectrometer_Data, new_Spectrometer_Data]) # unused for now
+        fileCount += 1
     
+    graphCount = input("How many packets should be graphed? (There are " + str(fileCount) + " total packets): ")
+    
+    try:
+        graphCount = int(graphCount)
+    except ValueError:
+        print("That was not acceptable input.")
+        return
+    if (graphCount > fileCount) or (graphCount < 1):
+        print("That was not acceptable input.")
+        return
+
+    # import the data from each file in directory
+    files = Path("decodedpackets").glob('*')
+    for file in files:
+        x = str(file)
+        x = x.strip("decodedpackets/.txt")
+        x = int(x)
+  
+        if (x < graphCount):
+            print("Adding " + str(file) + " to the graph.")
+            data = dataImport(file)
+
+            #new_GPS_Data = data[data[0] == 1].drop([0], axis=1) # unused for now
+            #GPS_Data = pd.concat([GPS_Data, new_GPS_Data]) # unused for now
+
+            #new_RMC_Data = data[data[0] == 2].drop([0], axis=1) # unused for now
+            #RMC_Data = pd.concat([RMC_Data, RMC_GPS_Data]) # unused for now
+
+            new_ACC_Data = data[data[0] == 3].drop([0, 5, 6, 7], axis=1)
+            ACC_Data = pd.concat([ACC_Data, new_ACC_Data])
+
+            new_IMU_Data = data[data[0] == 4].drop([0], axis=1)
+            IMU_Data = pd.concat([IMU_Data, new_IMU_Data])
+            
+            new_TC_Data = data[data[0] == 5].drop([0], axis=1)
+            TC_Data = pd.concat([TC_Data, new_TC_Data])
+
+            new_PRES_Data = data[data[0] == 6].drop([0, 7], axis=1)
+            PRES_Data = pd.concat([PRES_Data, new_PRES_Data])
+
+            #new_Spectrometer_Data = data[data[0] == 7].drop([0], axis=1) # unused for now
+            #Spectrometer_Data = pd.concat([Spectrometer_Data, new_Spectrometer_Data]) # unused for now
+
     # Melt/Format data correctly for graphs
     #GPS_Data_M = GPS_Data.melt(1, var_name='Sensor_number', value_name='val') # unused for now
     #RMC_Data_M = RMC_Data.melt(1, var_name='Sensor_number', value_name='val') # unused for now
