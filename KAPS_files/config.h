@@ -40,18 +40,18 @@ const std::string PACKET_DATA_PATH = "/home/pi/chris-test/CS-499-Senior-Design/p
 // GPS 
 #define GPS_ID 1
 #define GPS_PRIORITY 1
-#define GPS_NUM_SAMPLES_PER_DATA_POINT 5
-#define GPS_NUM_BITS_PER_SAMPLE 16
-#define GPS_OFFSET 0
-#define GPS_MULT 1
+#define GPS_NUM_SAMPLES_PER_DATA_POINT 8
+#define GPS_NUM_BITS_PER_SAMPLE 20
+#define GPS_OFFSET 180
+#define GPS_MULT 1000
 
 // RMC 
 #define RMC_ID 2
 #define RMC_PRIORITY 1
-#define RMC_NUM_SAMPLES_PER_DATA_POINT 5
-#define RMC_NUM_BITS_PER_SAMPLE 16
-#define RMC_OFFSET 0
-#define RMC_MULT 1
+#define RMC_NUM_SAMPLES_PER_DATA_POINT 7
+#define RMC_NUM_BITS_PER_SAMPLE 20
+#define RMC_OFFSET 180
+#define RMC_MULT 1000
 
 // ACC sensor
 #define ACC_ID 3
@@ -117,7 +117,7 @@ const std::string PACKET_DATA_PATH = "/home/pi/chris-test/CS-499-Senior-Design/p
 #define POINT_INCLUDE_LIMIT 1
 
 #define NEW_DATA_GRADIENT_SELECT true
-#define OLD_DATA_GRADIENT_SELECT false
+#define OLD_DATA_GRADIENT_SELECT true
 #define GRADIENT_SCALE 100 //If gradient values are too small (timestamp changes are larger than value changes) this can be used to scale them up
 
 //////////////////////////////
@@ -127,12 +127,12 @@ const std::string PACKET_DATA_PATH = "/home/pi/chris-test/CS-499-Senior-Design/p
 //////////////////////////////
 #define DEBUG // comment/uncomment to enable/disable debugging logs
 #ifdef DEBUG
-//#define PRINT_DATA
+#define PRINT_DATA
 // #define PACKET_P
 // #define VALIDITY_P
 // #define DEBUG_P
-// #define DATA_SEL_P // debug statements in DataSelector.cpp
-// #define GRADIENT_DATA_SELECTION_DEBUG
+//#define DATA_SEL_P // debug statements in DataSelector.cpp
+//#define GRADIENT_DATA_SELECTION_DEBUG
 //#define CALCULATED_GRADIENT_VALUE_DEBUG
 //#define GET_DATA_POINT_VALUES_DEBUG
 // #define DATA_P // debug statements in data.cpp
