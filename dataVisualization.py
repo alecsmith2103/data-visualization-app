@@ -56,7 +56,7 @@ def main():
         files = Path("decodedpackets").glob('*')
         for file in files:
             x = str(file)
-            x = x.strip("decodedpackets/.txt")
+            x = x.strip("decodedpackets/\.txt")
             x = int(x)
     
             if (x < graphCount):
