@@ -212,6 +212,7 @@ def main():
                         PRES_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, title="sensor #")
 
                     # Show plots
+                    plt.tight_layout()
                     plt.show()
                     return
         
