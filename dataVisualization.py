@@ -172,43 +172,42 @@ def main():
 
                     if (len(GPS_Data) != 0):
                         # GPS Graph settings
-                        GPS_graph = sb.scatterplot(x=6,y=7, hue=1, data=GPS_Data, palette="deep")
+                        GPS_graph = sb.scatterplot(x=6,y=7, hue=1, data=GPS_Data, palette="blend:gold,dodgerblue")
                         GPS_graph.set(title = "GPS Data", xlabel='latitude',ylabel='longitude', facecolor="#e0e0e0")
-                        GPS_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0)
+                        GPS_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, title="time (sec)")
 
                     if (len(RMC_Data) != 0):
                         # RMC Graph settings
-                        RMC_graph = sb.scatterplot(x=6,y=7, hue=1, data=RMC_Data, palette="deep")
+                        RMC_graph = sb.scatterplot(x=6,y=7, hue=1, data=RMC_Data, palette="blend:gold,dodgerblue")
                         RMC_graph.set(title = "RMC Data", xlabel='latitude',ylabel='longitude', facecolor="#e0e0e0")
-                        RMC_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0)
+                        RMC_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, title="time (sec)")
                 
                     if (len(ACC_Data) != 0):
                         # ACC Graph settings
                         ACC_graph = sb.lineplot(x=1,y='val',hue='Sensor_number', data=ACC_Data_M, marker='d')
                         ACC_graph.set(title = "Acceleration Data", xlabel='time',ylabel='acceleration',
                             facecolor="#e0e0e0")
-                        ACC_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0)
+                        ACC_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, title="sensor #")
                     if (len(IMU_Data) != 0):
                         # IMU Graph settings
                         IMU_graph = sb.lineplot(x=1,y='val',hue='Sensor_number', data=IMU_Data_M, marker='d')
                         IMU_graph.set(title = "IMU Data", xlabel='time',ylabel='IMU',
                             facecolor="#e0e0e0")
-                        IMU_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0)
+                        IMU_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, title="sensor #")
                     if (len(TC_Data) != 0):
                         # TC Graph settings
                         TC_graph = sb.lineplot(x=1,y='val',hue='Sensor_number', data=TC_Data_M, marker='d')
                         TC_graph.set(title = "TC Data", xlabel='time',ylabel='TC',
                             facecolor="#e0e0e0")
-                        TC_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0)
+                        TC_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, title="sensor #")
                     if (len(PRES_Data) != 0):
                         # PRES Graph settings
                         PRES_graph = sb.lineplot(x=1,y='val',hue='Sensor_number', data=PRES_Data_M, marker='d')
                         PRES_graph.set(title = "PRES Data", xlabel='time',ylabel='PRES',
                             facecolor="#e0e0e0")
-                        PRES_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0)
+                        PRES_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, title="sensor #")
 
                     # Show plots
-                    plt.subplots_adjust(hspace=0.3, wspace=0.42)
                     plt.show()
                     return
         
@@ -232,43 +231,43 @@ def main():
     # Graph setup
     fig, axs = plt.subplots(ncols=3, nrows=2, figsize=(12,7), facecolor='#adadad')
 
-    #GPS Graph settings
-    GPS_graph = sb.scatterplot(x=6,y=7,hue=1, data=GPS_Data, ax=axs[0, 2], palette="deep")
+    # GPS Graph settings
+    GPS_graph = sb.scatterplot(x=6,y=7, hue=1, data=GPS_Data, ax=axs[0,2], palette="blend:gold,dodgerblue")
     GPS_graph.set(title = "GPS Data", xlabel='latitude',ylabel='longitude', facecolor="#e0e0e0")
-    GPS_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0)
+    GPS_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, title="time (sec)")
 
-    #RMC Graph settings
-    RMC_graph = sb.scatterplot(x=6,y=7, hue=1, data=RMC_Data, palette="deep")
+    # RMC Graph settings
+    RMC_graph = sb.scatterplot(x=6,y=7, hue=1, data=RMC_Data, ax=axs[1,2], palette="blend:gold,dodgerblue")
     RMC_graph.set(title = "RMC Data", xlabel='latitude',ylabel='longitude', facecolor="#e0e0e0")
-    RMC_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0)
+    RMC_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, title="time (sec)")
 
     # ACC Graph settings
     ACC_graph = sb.lineplot(x=1,y='val',hue='Sensor_number', data=ACC_Data_M, 
         ax=axs[0,0], marker='d')
     ACC_graph.set(title = "Acceleration Data", xlabel='time',ylabel='acceleration',
         facecolor="#e0e0e0")
-    ACC_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0)
+    ACC_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, title="sensor #")
 
     # IMU Graph settings
     IMU_graph = sb.lineplot(x=1,y='val',hue='Sensor_number', data=IMU_Data_M, 
         ax=axs[1,0], marker='d')
     IMU_graph.set(title = "IMU Data", xlabel='time',ylabel='IMU',
         facecolor="#e0e0e0")
-    IMU_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0)
+    IMU_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, title="sensor #")
 
     # TC Graph settings
     TC_graph = sb.lineplot(x=1,y='val',hue='Sensor_number', data=TC_Data_M, 
         ax=axs[0,1], marker='d')
     TC_graph.set(title = "TC Data", xlabel='time',ylabel='TC',
         facecolor="#e0e0e0")
-    TC_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0)
+    TC_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, title="sensor #")
 
     # PRES Graph settings
     PRES_graph = sb.lineplot(x=1,y='val',hue='Sensor_number', data=PRES_Data_M, 
         ax=axs[1,1], marker='d')
     PRES_graph.set(title = "PRES Data", xlabel='time',ylabel='PRES',
         facecolor="#e0e0e0")
-    PRES_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0)
+    PRES_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, title="sensor #")
 
     #Spectrometer Graph settings # unused for now and needs additional changing
     '''
@@ -280,7 +279,7 @@ def main():
     '''
 
     # Show plots
-    plt.subplots_adjust(hspace=0.3, wspace=0.42)
+    plt.subplots_adjust(hspace=0.4, wspace=0.72)
     plt.show()
     return
     
