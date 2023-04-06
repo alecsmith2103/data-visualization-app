@@ -70,8 +70,10 @@ def main():
 
                 new_ACC_Data = data[data[0] == 3].drop([0, 5, 6, 7, 8, 9], axis=1)
                 ACC_Data = pd.concat([ACC_Data, new_ACC_Data])
+                also_new_ACC_Data = data[data[0] == 4].drop([0, 5, 6, 7, 8, 9], axis=1)
+                ACC_Data = pd.concat([ACC_Data, also_new_ACC_Data])
 
-                new_IMU_Data = data[data[0] == 4].drop([0, 8, 9], axis=1)
+                new_IMU_Data = data[data[0] == 4].drop([0, 2, 3, 4, 8, 9], axis=1)
                 IMU_Data = pd.concat([IMU_Data, new_IMU_Data])
                 
                 new_TC_Data = data[data[0] == 5].drop([0, 8, 9], axis=1)
@@ -122,8 +124,10 @@ def main():
 
                 new_ACC_Data = data[data[0] == 3].drop([0, 5, 6, 7, 8, 9], axis=1)
                 ACC_Data = pd.concat([ACC_Data, new_ACC_Data])
+                also_new_ACC_Data = data[data[0] == 4].drop([0, 5, 6, 7, 8, 9], axis=1)
+                ACC_Data = pd.concat([ACC_Data, also_new_ACC_Data])
 
-                new_IMU_Data = data[data[0] == 4].drop([0, 8, 9], axis=1)
+                new_IMU_Data = data[data[0] == 4].drop([0, 2, 3, 4, 8, 9], axis=1)
                 IMU_Data = pd.concat([IMU_Data, new_IMU_Data])
                 
                 new_TC_Data = data[data[0] == 5].drop([0, 8, 9], axis=1)
@@ -152,8 +156,10 @@ def main():
 
                     new_ACC_Data = data[data[0] == 3].drop([0, 5, 6, 7, 8, 9], axis=1)
                     ACC_Data = pd.concat([ACC_Data, new_ACC_Data])
+                    also_new_ACC_Data = data[data[0] == 4].drop([0, 5, 6, 7, 8, 9], axis=1)
+                    ACC_Data = pd.concat([ACC_Data, also_new_ACC_Data])
 
-                    new_IMU_Data = data[data[0] == 4].drop([0, 8, 9], axis=1)
+                    new_IMU_Data = data[data[0] == 4].drop([0, 2, 3, 4, 8, 9], axis=1)
                     IMU_Data = pd.concat([IMU_Data, new_IMU_Data])
                     
                     new_TC_Data = data[data[0] == 5].drop([0, 8, 9], axis=1)
@@ -175,13 +181,11 @@ def main():
                         GPS_graph = sb.scatterplot(x=6,y=7, hue=1, data=GPS_Data, palette="blend:gold,dodgerblue")
                         GPS_graph.set(title = "GPS Data", xlabel='latitude',ylabel='longitude', facecolor="#e0e0e0")
                         GPS_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, title="time (sec)")
-
                     if (len(RMC_Data) != 0):
                         # RMC Graph settings
                         RMC_graph = sb.scatterplot(x=6,y=7, hue=1, data=RMC_Data, palette="blend:gold,dodgerblue")
                         RMC_graph.set(title = "RMC Data", xlabel='latitude',ylabel='longitude', facecolor="#e0e0e0")
                         RMC_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, title="time (sec)")
-                
                     if (len(ACC_Data) != 0):
                         # ACC Graph settings
                         ACC_graph = sb.lineplot(x=1,y='val',hue='Sensor_number', data=ACC_Data_M, marker='d')
