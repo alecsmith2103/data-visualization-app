@@ -70,10 +70,10 @@ def main():
 
                 new_ACC_Data = data[data[0] == 3].drop([0, 5, 6, 7, 8, 9], axis=1)
                 ACC_Data = pd.concat([ACC_Data, new_ACC_Data])
-                also_new_ACC_Data = data[data[0] == 4].drop([0, 5, 6, 7, 8, 9], axis=1)
+                also_new_ACC_Data = data[data[0] == 4].drop([0, 2,3,4, 8, 9], axis=1)
                 ACC_Data = pd.concat([ACC_Data, also_new_ACC_Data])
 
-                new_IMU_Data = data[data[0] == 4].drop([0, 2, 3, 4, 8, 9], axis=1)
+                new_IMU_Data = data[data[0] == 4].drop([0, 5,6,7, 8, 9], axis=1)
                 IMU_Data = pd.concat([IMU_Data, new_IMU_Data])
                 
                 new_TC_Data = data[data[0] == 5].drop([0, 8, 9], axis=1)
