@@ -144,9 +144,15 @@ def main():
         # Specific type of data to get plotted alone
         elif (Path(fileChoice).exists()):
             # import the data from each data file in directory
-            files = Path("decodeddata").glob('*')
+            if fileChoice != 'decodeddata\\decodeddata3.txt':
+                files = Path("decodeddata").glob('*')
+                ACC_flag = False
+            else:
+                files = Path("decodeddata").glob('./decodeddata[3-4].txt')
+                ACC_flag = True
+            
             for file in files:
-                if (str(file) == fileChoice):
+                if (str(file) == fileChoice or ACC_flag == True):
                     print("Adding " + str(file) + " to the graph...")
                     data = dataImport(file)
 
@@ -158,7 +164,7 @@ def main():
 
                     new_ACC_Data = data[data[0] == 3].drop([0, 5, 6, 7, 8, 9], axis=1)
                     ACC_Data = pd.concat([ACC_Data, new_ACC_Data])
-                    if ACC_Data.empty == False:
+                    if ACC_flag == True:
                         ACC_IMU_Data = data[data[0] == 4].drop([0, 5, 6, 7, 8, 9], axis=1)
                         ACC_IMU_Data = ACC_IMU_Data.rename(columns={2:5, 3:6, 4:7})
                         ACC_Data = pd.concat([ACC_Data, ACC_IMU_Data])
@@ -175,52 +181,52 @@ def main():
                     #new_Spectrometer_Data = data[data[0] == 7].drop([0], axis=1) # unused for now
                     #Spectrometer_Data = pd.concat([Spectrometer_Data, new_Spectrometer_Data]) # unused for now
 
-                    ACC_Data_M = ACC_Data.melt(1, var_name='Sensor_number', value_name='val')
-                    IMU_Data_M = IMU_Data.melt(1, var_name='Sensor_number', value_name='val')
-                    TC_Data_M = TC_Data.melt(1, var_name='Sensor_number', value_name='val')
-                    PRES_Data_M = PRES_Data.melt(1, var_name='Sensor_number', value_name='val')
+            ACC_Data_M = ACC_Data.melt(1, var_name='Sensor_number', value_name='val')
+            IMU_Data_M = IMU_Data.melt(1, var_name='Sensor_number', value_name='val')
+            TC_Data_M = TC_Data.melt(1, var_name='Sensor_number', value_name='val')
+            PRES_Data_M = PRES_Data.melt(1, var_name='Sensor_number', value_name='val')
 
-                    if (len(GPS_Data) != 0):
-                        # GPS Graph settings
-                        GPS_graph = sb.scatterplot(x=6,y=7, hue=1, data=GPS_Data, palette="blend:gold,dodgerblue")
-                        GPS_graph.set(title = "GPS Data", xlabel='latitude',ylabel='longitude', facecolor="#e0e0e0")
-                        GPS_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, title="time (sec)")
-                    if (len(RMC_Data) != 0):
-                        # RMC Graph settings
-                        RMC_graph = sb.scatterplot(x=6,y=7, hue=1, data=RMC_Data, palette="blend:gold,dodgerblue")
-                        RMC_graph.set(title = "RMC Data", xlabel='latitude',ylabel='longitude', facecolor="#e0e0e0")
-                        RMC_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, title="time (sec)")
-                    if (len(ACC_Data) != 0):
-                        # ACC Graph settings
-                        ACC_graph = sb.lineplot(x=1, y='val', hue='Sensor_number', data=ACC_Data_M,
-                            palette=sb.color_palette('pastel', n_colors=6), marker='d')
-                        labels = ['{}{}'.format(l if i < 3 else l-3, 'ACC' if i < 3 else 'IMU') for i, l in enumerate(ACC_Data_M['Sensor_number'].unique())]
-                        handles, _ = ACC_graph.get_legend_handles_labels() 
-                        ACC_graph.legend(handles=handles, labels=labels, bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, title="Sensor #")
-                        ACC_graph.set(title="Acceleration Data", xlabel='time', ylabel='acceleration', facecolor="#e0e0e0")
-                    if (len(IMU_Data) != 0):
-                        # IMU Graph settings
-                        IMU_graph = sb.lineplot(x=1,y='val',hue='Sensor_number', data=IMU_Data_M, marker='d', palette = sb.color_palette('pastel', n_colors=3))
-                        IMU_graph.set(title = "IMU Data", xlabel='time',ylabel='IMU',
-                            facecolor="#e0e0e0")
-                        IMU_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, title="sensor #")
-                    if (len(TC_Data) != 0):
-                        # TC Graph settings
-                        TC_graph = sb.lineplot(x=1,y='val',hue='Sensor_number', data=TC_Data_M, marker='d', palette = sb.color_palette('pastel', n_colors=6))
-                        TC_graph.set(title = "TC Data", xlabel='time',ylabel='TC',
-                            facecolor="#e0e0e0")
-                        TC_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, title="sensor #")
-                    if (len(PRES_Data) != 0):
-                        # PRES Graph settings
-                        PRES_graph = sb.lineplot(x=1,y='val',hue='Sensor_number', data=PRES_Data_M, marker='d', palette = sb.color_palette('pastel', n_colors=5))
-                        PRES_graph.set(title = "PRES Data", xlabel='time',ylabel='PRES',
-                            facecolor="#e0e0e0")
-                        PRES_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, title="sensor #")
+            if (len(GPS_Data) != 0):
+                # GPS Graph settings
+                GPS_graph = sb.scatterplot(x=6,y=7, hue=1, data=GPS_Data, palette="blend:gold,dodgerblue")
+                GPS_graph.set(title = "GPS Data", xlabel='latitude',ylabel='longitude', facecolor="#e0e0e0")
+                GPS_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, title="time (sec)")
+            if (len(RMC_Data) != 0):
+                # RMC Graph settings
+                RMC_graph = sb.scatterplot(x=6,y=7, hue=1, data=RMC_Data, palette="blend:gold,dodgerblue")
+                RMC_graph.set(title = "RMC Data", xlabel='latitude',ylabel='longitude', facecolor="#e0e0e0")
+                RMC_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, title="time (sec)")
+            if (len(ACC_Data) != 0):
+                # ACC Graph settings
+                ACC_graph = sb.lineplot(x=1, y='val', hue='Sensor_number', data=ACC_Data_M,
+                    palette=sb.color_palette('pastel', n_colors=6), marker='d')
+                labels = ['{}{}'.format(l if i < 3 else l-3, 'ACC' if i < 3 else 'IMU') for i, l in enumerate(ACC_Data_M['Sensor_number'].unique())]
+                handles, _ = ACC_graph.get_legend_handles_labels() 
+                ACC_graph.legend(handles=handles, labels=labels, bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, title="Sensor #")
+                ACC_graph.set(title="Acceleration Data", xlabel='time', ylabel='acceleration', facecolor="#e0e0e0")
+            if (len(IMU_Data) != 0 and ACC_flag == False):
+                # IMU Graph settings
+                IMU_graph = sb.lineplot(x=1,y='val',hue='Sensor_number', data=IMU_Data_M, marker='d', palette = sb.color_palette('pastel', n_colors=3))
+                IMU_graph.set(title = "IMU Data", xlabel='time',ylabel='IMU',
+                    facecolor="#e0e0e0")
+                IMU_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, title="sensor #")
+            if (len(TC_Data) != 0):
+                # TC Graph settings
+                TC_graph = sb.lineplot(x=1,y='val',hue='Sensor_number', data=TC_Data_M, marker='d', palette = sb.color_palette('pastel', n_colors=6))
+                TC_graph.set(title = "TC Data", xlabel='time',ylabel='TC',
+                    facecolor="#e0e0e0")
+                TC_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, title="sensor #")
+            if (len(PRES_Data) != 0):
+                # PRES Graph settings
+                PRES_graph = sb.lineplot(x=1,y='val',hue='Sensor_number', data=PRES_Data_M, marker='d', palette = sb.color_palette('pastel', n_colors=5))
+                PRES_graph.set(title = "PRES Data", xlabel='time',ylabel='PRES',
+                    facecolor="#e0e0e0")
+                PRES_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, title="sensor #")
 
-                    # Show plots
-                    plt.tight_layout()
-                    plt.show()
-                    return
+            # Show plots
+            plt.tight_layout()
+            plt.show()
+            return
         
         # Bad input
         else:
