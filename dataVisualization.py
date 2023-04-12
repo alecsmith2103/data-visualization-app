@@ -186,37 +186,39 @@ def main():
             TC_Data_M = TC_Data.melt(1, var_name='Sensor_number', value_name='val')
             PRES_Data_M = PRES_Data.melt(1, var_name='Sensor_number', value_name='val')
 
-            if (len(GPS_Data) != 0):
+            #if sensor has data, set the graph settings to plot - only for "data" option
+            if (GPS_Data.empty == False):
                 # GPS Graph settings
-                GPS_graph = sb.scatterplot(x=6,y=7, hue=1, data=GPS_Data, palette="blend:gold,dodgerblue")
+                GPS_graph = sb.scatterplot(x=6,y=7, hue=1, data=GPS_Data, palette="blend:gold,dodgerblue") #gradient color for gps location over time
                 GPS_graph.set(title = "GPS Data", xlabel='latitude',ylabel='longitude', facecolor="#e0e0e0")
                 GPS_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, title="time (sec)")
-            if (len(RMC_Data) != 0):
+            if (RMC_Data.empty == False):
                 # RMC Graph settings
-                RMC_graph = sb.scatterplot(x=6,y=7, hue=1, data=RMC_Data, palette="blend:gold,dodgerblue")
+                RMC_graph = sb.scatterplot(x=6,y=7, hue=1, data=RMC_Data, palette="blend:gold,dodgerblue") #gradient color for gps location over time
                 RMC_graph.set(title = "RMC Data", xlabel='latitude',ylabel='longitude', facecolor="#e0e0e0")
                 RMC_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, title="time (sec)")
-            if (len(ACC_Data) != 0):
+            if (ACC_Data.empty == False):
                 # ACC Graph settings
                 ACC_graph = sb.lineplot(x=1, y='val', hue='Sensor_number', data=ACC_Data_M,
                     palette=sb.color_palette('pastel', n_colors=6), marker='d')
+                #have to declare labels and handles to merge legends since ACC and IMU data is combined, format allows for distinction of ACC vs. IMU sensors
                 labels = ['{}{}'.format(l if i < 3 else l-3, 'ACC' if i < 3 else 'IMU') for i, l in enumerate(ACC_Data_M['Sensor_number'].unique())]
                 handles, _ = ACC_graph.get_legend_handles_labels() 
                 ACC_graph.legend(handles=handles, labels=labels, bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, title="Sensor #")
                 ACC_graph.set(title="Acceleration Data", xlabel='time', ylabel='acceleration', facecolor="#e0e0e0")
-            if (len(IMU_Data) != 0 and ACC_flag == False):
+            if (IMU_Data.empty == False and ACC_flag == False):
                 # IMU Graph settings
                 IMU_graph = sb.lineplot(x=1,y='val',hue='Sensor_number', data=IMU_Data_M, marker='d', palette = sb.color_palette('pastel', n_colors=3))
                 IMU_graph.set(title = "IMU Data", xlabel='time',ylabel='IMU',
                     facecolor="#e0e0e0")
                 IMU_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, title="sensor #")
-            if (len(TC_Data) != 0):
+            if (TC_Data.empty == False):
                 # TC Graph settings
                 TC_graph = sb.lineplot(x=1,y='val',hue='Sensor_number', data=TC_Data_M, marker='d', palette = sb.color_palette('pastel', n_colors=6))
                 TC_graph.set(title = "TC Data", xlabel='time',ylabel='TC',
                     facecolor="#e0e0e0")
                 TC_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, title="sensor #")
-            if (len(PRES_Data) != 0):
+            if (PRES_Data.empty == False):
                 # PRES Graph settings
                 PRES_graph = sb.lineplot(x=1,y='val',hue='Sensor_number', data=PRES_Data_M, marker='d', palette = sb.color_palette('pastel', n_colors=5))
                 PRES_graph.set(title = "PRES Data", xlabel='time',ylabel='PRES',
@@ -228,12 +230,12 @@ def main():
             plt.show()
             return
         
-        # Bad input
+        # Bad input, error handling
         else:
             print("That was not acceptable input.")
             return
 
-    # Bad input
+    # Bad input, error handling
     else:
         print("That was not acceptable input.")
         return
@@ -245,22 +247,23 @@ def main():
     PRES_Data_M = PRES_Data.melt(1, var_name='Sensor_number', value_name='val')
     #Spectrometer_Data_M = Spectrometer_Data.melt(1, var_name='Sensor_number', value_name='val') # unused for now and needs additonal changing
 
-    # Graph setup
+    # Graph setup, change here if spectrometer data gets added in future implementation - graph settings below only for "packet" option
     fig, axs = plt.subplots(ncols=3, nrows=2, figsize=(12,7), facecolor='#adadad')
 
     # GPS Graph settings
-    GPS_graph = sb.scatterplot(x=6,y=7, hue=1, data=GPS_Data, ax=axs[0,2], palette="blend:gold,dodgerblue")
+    GPS_graph = sb.scatterplot(x=6,y=7, hue=1, data=GPS_Data, ax=axs[0,2], palette="blend:gold,dodgerblue") #gradient color for gps location over time
     GPS_graph.set(title = "GPS Data", xlabel='latitude',ylabel='longitude', facecolor="#e0e0e0")
     GPS_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, title="time (sec)")
 
     # RMC Graph settings
-    RMC_graph = sb.scatterplot(x=6,y=7, hue=1, data=RMC_Data, ax=axs[1,2], palette="blend:gold,dodgerblue")
+    RMC_graph = sb.scatterplot(x=6,y=7, hue=1, data=RMC_Data, ax=axs[1,2], palette="blend:gold,dodgerblue") #gradient color for gps location over time
     RMC_graph.set(title = "RMC Data", xlabel='latitude',ylabel='longitude', facecolor="#e0e0e0")
     RMC_graph.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, title="time (sec)")
 
     # ACC Graph settings
     ACC_graph = sb.lineplot(x=1, y='val', hue='Sensor_number', data=ACC_Data_M,
             palette=sb.color_palette('pastel', n_colors=6), marker='d', ax=axs[0, 0])
+    #have to declare labels and handles to merge legends since ACC and IMU data is combined, format allows for distinction of ACC vs. IMU sensors
     labels = ['{}{}'.format(l if i < 3 else l-3, 'ACC' if i < 3 else 'IMU') for i, l in enumerate(ACC_Data_M['Sensor_number'].unique())]
     handles, _ = ACC_graph.get_legend_handles_labels() 
     axs[0, 0].legend(handles=handles, labels=labels, bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, title="Sensor #")
