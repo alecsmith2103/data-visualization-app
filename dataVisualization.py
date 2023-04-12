@@ -144,7 +144,7 @@ def main():
         # Specific type of data to get plotted alone
         elif (Path(fileChoice).exists()):
             # import the data from each data file in directory
-            if fileChoice != 'decodeddata\\decodeddata3.txt':
+            if fileChoice != 'decodeddata\\decodeddata3.txt' and fileChoice != 'decodeddata/decodeddata3.txt':
                 files = Path("decodeddata").glob('*')
                 ACC_flag = False
             else:
